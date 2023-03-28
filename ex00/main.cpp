@@ -6,12 +6,13 @@
 /*   By: iqabbal <iqabbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 00:48:00 by iqabbal           #+#    #+#             */
-/*   Updated: 2023/03/27 03:07:25 by iqabbal          ###   ########.fr       */
+/*   Updated: 2023/03/28 02:43:24 by iqabbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <fstream>
+#include <string>
 
 bool count_extenstion(std::string fn)
 {
@@ -36,6 +37,25 @@ bool file_extention(std::string fn)
     
 }
 
+void parse_date(std::string date)
+{
+    std::string year;
+    std::string month;
+    std::string day;
+    
+   int count  = std::count(date.begin(),date.end(),'-');
+   
+   if(count != 2 && date.length() != 10)
+        return ;
+    if(date[5] == '-' && date[7] == '-')
+    {
+        year = date.substr(0,4);
+        month = date.substr(date.find('-'),2);
+        day = date.substr(date.rfind('-'),2);
+    }
+    
+    
+}
 std::string read_file(std::string fn)
 {
     std::fstream file;
@@ -51,6 +71,7 @@ std::string read_file(std::string fn)
     }
     std::cout << content << std::endl;
     file.close();
+    
     return(content);
         
 }
