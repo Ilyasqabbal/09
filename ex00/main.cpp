@@ -6,7 +6,7 @@
 /*   By: iqabbal <iqabbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 00:48:00 by iqabbal           #+#    #+#             */
-/*   Updated: 2023/04/02 07:16:17 by iqabbal          ###   ########.fr       */
+/*   Updated: 2023/04/10 09:57:22 by iqabbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ bool parse_date(std::string date,std::string date1)
 
 bool parse_value(std::string value)
 {
+    if()
     long v = atof(value.c_str());
-   // std::cout << v << std::endl;
     if( v < 0)
     {
         std::cout << "Error: not a positive number." << std::endl;
@@ -130,13 +130,6 @@ void parse_line(std::string content,std::string date1)
         }
         int len = content.length() - (content.find('|') + 1 );
         std::string value = content.substr(content.find('|') + 1,len);
-
-
-        // std::cout << "content " << content << std::endl;
-        // std::cout << "is : " << (content.find('|') + 1 ) << std::endl;
-        // std::cout << "len is : " << len << std::endl;
-        // std::cout << "value : " << value << std::endl;
-        
         if(parse_value(value))
         {
             std::multimap<std::string,double>m = insert_in_map();
@@ -147,9 +140,6 @@ void parse_line(std::string content,std::string date1)
                 itr = m.lower_bound(date);
                 itr--;
             }
-            //if(m.find(date) == -1)
-                
-            //std::cout << "itr second " << itr->second << std::endl;
             std::cout << date << " => " << value << " = " << itr->second * atof(value.c_str()) << std::endl;
         }
         
@@ -171,8 +161,15 @@ std::string read_file(std::string fn,std::string date1)
     while(!file.eof())
     {
         getline(file,content1);
-        int index = content1.find('|');
-        int len = content1.find("\n") - index;
+        if(i == 0)
+        {
+            
+           if(std::strcmp("date | value", content1.c_str()))
+           {
+                std::cout << "error in input file" << std::endl;
+                exit(1);
+           }
+        }
         if(i >= 1)
             parse_line(content1,date1);
         content += content1 + '\n';
